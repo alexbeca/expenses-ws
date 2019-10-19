@@ -12,9 +12,10 @@ type Service interface {
     Validate(ctx context.Context, date string) (bool, error)
 }
 
+//Implementation of the interface starts here
 type dateService struct{}
 
-// NewService makes a new Service.
+// NewService makes a new Service. Constructor
 func NewService() Service {
     return dateService{}
 }
