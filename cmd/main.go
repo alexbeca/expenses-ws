@@ -10,7 +10,7 @@ import (
     "os/signal"
     "syscall"
 
-    "github.com/alexbeca/expenses-ws/napodate"
+    "github.com/alexbeca/expenses-ws/services"
 )
 
 func main() {
@@ -19,8 +19,8 @@ func main() {
     )
     flag.Parse()
     ctx := context.Background()
-    // our napodate service
-    srv := napodate.NewService()
+    // our app service
+    srv := services.NewService()
     errChan := make(chan error)
 
     go func() {
@@ -30,16 +30,16 @@ func main() {
     }()
 
     // mapping endpoints
-    endpoints := napodate.Endpoints{
-        GetEndpoint:      napodate.MakeGetEndpoint(srv),
-        StatusEndpoint:   napodate.MakeStatusEndpoint(srv),
-        ValidateEndpoint: napodate.MakeValidateEndpoint(srv),
+    endpoints := services.Endpoints{
+        GetEndpoint:      services.MakeGetEndpoint(srv),
+        StatusEndpoint:   services.MakeStatusEndpoint(srv),
+        ValidateEndpoint: services.MakeValidateEndpoint(srv),
     }
 
     // HTTP transport
     go func() {
-        log.Println("napodate is listening on port:", *httpAddr)
-        handler := napodate.NewHTTPServer(ctx, endpoints)
+        log.Println("app ws is listening on port:", *httpAddr)
+        handler := services.NewHTTPServer(ctx, endpoints)
         errChan <- http.ListenAndServe(*httpAddr, handler)
     }()
 

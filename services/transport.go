@@ -1,4 +1,4 @@
-package napodate
+package services
 
 import (
     "context"
@@ -29,6 +29,16 @@ type statusResponse struct {
     Status string `json:"status"`
 }
 
+type registerRequest struct {
+    Amount float64 `json:"amount"`
+    Description string `json:"description"`
+}
+
+type registerResponse struct {
+    Status string `json:"status"`
+    Err   string `json:"err,omitempty"`
+}
+
 // In the second part we will write "decoders" for our incoming requests
 func decodeGetRequest(ctx context.Context, r *http.Request) (interface{}, error) {
     var req getRequest
@@ -46,6 +56,15 @@ func decodeValidateRequest(ctx context.Context, r *http.Request) (interface{}, e
 
 func decodeStatusRequest(ctx context.Context, r *http.Request) (interface{}, error) {
     var req statusRequest
+    return req, nil
+}
+
+func decodeRegisterRequest(ctx context.Context, r *http.Request) (interface{}, error) {
+    var req registerRequest
+    err := json.NewDecoder(r.Body).Decode(&req)
+    if err != nil {
+        return nil, err
+    }
     return req, nil
 }
 

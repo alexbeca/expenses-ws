@@ -1,9 +1,8 @@
-package napodate
+package services
 
 import (
     "context"
     "errors"
-
     "github.com/go-kit/kit/endpoint"
 )
 
@@ -12,6 +11,7 @@ type Endpoints struct {
     GetEndpoint      endpoint.Endpoint
     StatusEndpoint   endpoint.Endpoint
     ValidateEndpoint endpoint.Endpoint
+    RegisterEndpoint endpoint.Endpoint
 }
 
 // MakeGetEndpoint returns the response from our service "get"

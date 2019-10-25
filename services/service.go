@@ -1,4 +1,4 @@
-package napodate
+package services
 
 import (
     "context"
@@ -12,12 +12,22 @@ type Service interface {
     Validate(ctx context.Context, date string) (bool, error)
 }
 
+type ExpService interface {
+    Register(ctx context.Context) (string, error)
+}
+
 //Implementation of the interface starts here
 type dateService struct{}
+
+type expenseService struct{}
 
 // NewService makes a new Service. Constructor
 func NewService() Service {
     return dateService{}
+}
+
+func NewExpenseService() ExpService {
+    return expenseService{}
 }
 
 // Status only tell us that our service is ok!
@@ -38,4 +48,9 @@ func (dateService) Validate(ctx context.Context, date string) (bool, error) {
         return false, err
     }
     return true, nil
+}
+
+// Register expense (Methods implementation of the interface)
+func (expenseService) Register(ctx context.Context, ) (string, error){
+    return "ok", nil
 }
