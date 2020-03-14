@@ -10,7 +10,7 @@ import (
     "os/signal"
     "syscall"
 
-    "github.com/alexbeca/expenses-ws/services"
+    "expenses-ws/services"
 )
 
 func main() {
